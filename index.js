@@ -50,8 +50,21 @@ class Bank {
             return foundBranch.listCustomers(includeTransactions);
         } else {
             console.error("Branch not found.");
-            return null; 
+            return null;
         }
+    }
+
+    searchCustomers(keyword) {
+        const matchingCustomers = [];
+        this.branches.forEach(branch => {
+            branch.getCustomers().forEach(customer => {
+                if (customer.getName().toLowerCase().includes(keyword.toLowerCase()) ||
+                    customer.getId().toString() === keyword.toString()) {
+                    matchingCustomers.push(customer);
+                }
+            });
+        });
+        return matchingCustomers;
     }
 }
 
@@ -144,9 +157,6 @@ const customer3 = new Customer("John", 3);
 arizonaBank.addBranch(westBranch);
 arizonaBank.addBranch(sunBranch);
 
-arizonaBank.findBranchByName("bank");
-arizonaBank.findBranchByName("Sun Branch");
-
 arizonaBank.addCustomer(westBranch, customer1);
 arizonaBank.addCustomer(westBranch, customer3);
 arizonaBank.addCustomer(sunBranch, customer1);
@@ -160,3 +170,9 @@ customer1.addTransaction(-1000);
 console.log(customer1.getBalance());
 console.log(arizonaBank.listCustomers(westBranch, true));
 console.log(arizonaBank.listCustomers(sunBranch, true));
+
+const searchResults = arizonaBank.searchCustomers("John");
+console.log("Search Results:");
+searchResults.forEach(customer => {
+    console.log(`Customer Name: ${customer.getName()}, Customer ID: ${customer.getId()}`);
+});
