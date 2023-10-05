@@ -12,7 +12,9 @@ class Bank {
     }
 
     addBranch(branch) {
-        if (!this.branches.some(b => b.getName() === branch.getName())) {
+        const branchExisted = this.branches.some(b => b.getName() === branch.getName());
+
+        if (!branchExisted) {
             this.branches.push(branch);
             return true;
         }
@@ -48,7 +50,7 @@ class Bank {
             return foundBranch.listCustomers(includeTransactions);
         } else {
             console.error("Branch not found.");
-            return null; // Return null in case of error
+            return null; 
         }
     }
 }
@@ -68,7 +70,9 @@ class Branch {
     }
 
     addCustomer(customer) {
-        if (!this.customers.some(c => c.getId() === customer.getId())) {
+        const customerExisted = this.customers.some(c => c.getId() === customer.getId());
+
+        if (!customerExisted) {
             this.customers.push(customer);
             return true;
         } else {
