@@ -1,6 +1,6 @@
 class Transaction {
-    amount: number;
-    date: Date;
+    public amount: number;
+    public date: Date;
 
     constructor(amount: number, date: Date) {
         this.amount = amount;
@@ -27,11 +27,11 @@ class Bank {
     }
 
     addCustomer(branch: Branch, customer: Customer): boolean {
-        if (branch instanceof Branch && customer instanceof Customer) {
-            return branch.addCustomer(customer);
+        if (this.branches.includes(branch)) {
+          return branch.addCustomer(customer);
         }
         return false;
-    }
+      }
 
     addCustomerTransaction(branch: Branch, customerId: number, amount: number): boolean {
         const foundBranch = this.branches.find(b => b.getName() === branch.getName());
